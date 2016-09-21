@@ -4,5 +4,4 @@
 
 *.iml
 
-/build/
-
+build/

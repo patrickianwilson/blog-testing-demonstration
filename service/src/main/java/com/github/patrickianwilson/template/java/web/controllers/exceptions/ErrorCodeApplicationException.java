@@ -35,7 +35,7 @@ public abstract class ErrorCodeApplicationException extends RuntimeException {
         private String message;
         private String code;
 
-        private Body(String message, String code) {
+        public Body(String message, String code) {
             this.message = message;
             this.code = code;
         }

@@ -3,6 +3,7 @@ package com.github.patrickianwilson.template.java.web;
 import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
 import com.github.patrickianwilson.template.java.web.controllers.ErrorCodeExceptionMapper;
 import com.github.patrickianwilson.template.java.web.controllers.StatusController;
+import com.github.patrickianwilson.template.java.web.controllers.TestingController;
 import com.google.inject.servlet.ServletModule;
 
 /**
@@ -19,9 +20,11 @@ public class WebModule extends ServletModule {
 
         //exception mappers
         bind(ErrorCodeExceptionMapper.class);
+        bind(GenericServerErrorExceptionMapper.class);
 
         //controllers.
         bind(StatusController.class);
+        bind(TestingController.class);
 
         //boot up the resteasy dispatcher.
         bind(FilterDispatcher.class).asEagerSingleton();
