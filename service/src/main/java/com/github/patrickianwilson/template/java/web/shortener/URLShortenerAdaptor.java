@@ -5,4 +5,5 @@ package com.github.patrickianwilson.template.java.web.shortener;
  */
 public interface URLShortenerAdaptor {
 
+    String shortenUrl(String longUrl);
 }

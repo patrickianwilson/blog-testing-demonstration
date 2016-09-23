@@ -6,4 +6,8 @@ package com.github.patrickianwilson.template.java.web.shortener;
 public class GoogleURLShortenerAdaptor implements URLShortenerAdaptor {
 
 
+    @Override
+    public String shortenUrl(String longUrl) {
+        return null;
+    }
 }

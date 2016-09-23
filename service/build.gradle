@@ -2,3 +2,9 @@ apply from: "$rootProject.projectDir/config/gradle/includes/java-conventions.gra
 apply from: "$rootProject.projectDir/config/gradle/includes/java-web-conventions.gradle"
 apply from: "$rootProject.projectDir/config/gradle/includes/guice-conventions.gradle"
 apply from: "$rootProject.projectDir/config/gradle/includes/resteasy-conventions.gradle"
+
+dependencies {
+    compile "org.hibernate:hibernate-core:4.1.9.Final"
+    compile "org.hibernate:hibernate-validator:4.1.0.Final"
+    compile "mysql:mysql-connector-java:5.1.22"
+}
