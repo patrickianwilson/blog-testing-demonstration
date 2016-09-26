@@ -13,7 +13,6 @@ public class StatusController {
 
     @GET
     public Response getStatus() {
-        throw new InvalidURLException("http://f.yu/13279127391273!!!!?????");
-//        return Response.ok("I am doing awesome!").build();
+        return Response.ok("I am doing awesome!").build();
     }
 }

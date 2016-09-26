@@ -1,1 +1,18 @@
 apply from: "$rootProject.projectDir/config/gradle/includes/java-conventions.gradle"
+
+dependencies {
+//    testCompile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.0.22'
+//    testCompile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.0.22'
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.2.0.v20160908'
+    testCompile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '8.2.0.v20160908'
+    testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    testCompile project(":service")
+}
+
+task runIntegrationTests(type: Test, dependsOn: ":service:war") {
+    include "**/*IntegrationRunner.class"
+    systemProperty('WAR_FILE', project(":service").getBuildDir().getAbsolutePath() + "/libs/service-1.0.1-SNAPSHOST.war")
+}
+
+test.dependsOn runIntegrationTests
+
