@@ -10,15 +10,14 @@ public class Runner {
 
     public static final int DEFAULT_PORT = 8080;
     private final String warFile;
+    private final Server jetty;
 
     public Runner(String webDir) {
         this.warFile = webDir;
+        jetty = new Server(DEFAULT_PORT);
     }
 
-    public Server start() throws Exception {
-
-
-        Server jetty = new Server(DEFAULT_PORT);
+    public void start() throws Exception {
 
         WebAppContext webapp = new WebAppContext();
         webapp.setContextPath("/");
@@ -26,6 +25,18 @@ public class Runner {
 
         jetty.setHandler(webapp);
         jetty.start();
-        return jetty;
+
+    }
+
+    public void stop() throws Exception {
+        jetty.stop();
+    }
+
+    /**
+     * Join the main thread to the jetty worker pool and block until the pool shuts down.
+     * @throws Exception
+     */
+    public void join() throws Exception {
+
     }
 }

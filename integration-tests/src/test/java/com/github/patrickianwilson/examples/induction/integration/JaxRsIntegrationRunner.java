@@ -18,18 +18,20 @@ import org.junit.Test;
 import com.google.common.base.Preconditions;
 
 /**
- * Created by pwilson on 9/26/16.
+ * JAX-RS Integration Test.
+ *
+ * Testing Plan:
+ * 1.
  */
 public class JaxRsIntegrationRunner {
-    private static Server server;
+    private static Runner runner = null;
 
     @BeforeClass
     public static void startServer() throws Exception {
         Preconditions.checkNotNull(System.getProperty("WAR_FILE"), "This test requires the web path for the service project!  Run with System Property \"WAR_FILE\"");
 
-        Runner runner = new Runner(System.getProperty("WAR_FILE"));
-        server = runner.start();
-//        tomcat.getServer().await();
+        runner = new Runner(System.getProperty("WAR_FILE"));
+
     }
 
 
@@ -46,7 +48,7 @@ public class JaxRsIntegrationRunner {
 
     @AfterClass
     public static void stopServer() throws Exception {
-        server.stop();
+        runner.stop();
     }
 
 
