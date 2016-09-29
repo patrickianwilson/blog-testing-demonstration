@@ -9,5 +9,5 @@ import com.github.patrickianwilson.template.java.web.service.exceptions.ServiceU
  */
 public interface URLService {
 
-    URI shorten(URI longUrl) throws ServiceUnavailableException;
+    String shorten(String longUrl) throws ServiceUnavailableException;
 }
