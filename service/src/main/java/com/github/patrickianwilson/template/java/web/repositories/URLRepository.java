@@ -10,7 +10,7 @@ public interface URLRepository {
     /**
      * lookup an url Entity based on the longform of the URL (ie = the unshortened url).
      * @param longForm
-     * @return
+     * @return the url entity (if found) or null otherwise.
      */
     UrlServiceEntity findByLongForm(String longForm);
 
