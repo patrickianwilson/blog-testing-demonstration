@@ -70,8 +70,8 @@ jar {
 }
 
 test {
-    ignoreFailures = true
-    include "**/*Test.class"
+    ignoreFailures = false
+    include "**/*Tests.class"
     exclude "**/Abstract*.class"
     exclude "**/Base*.class"
 }
