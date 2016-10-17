@@ -1,3 +1,7 @@
+package com.github.patrickianwilson.blogs.testing.induction.shortener;
+
+import static org.junit.Assert.fail;
+import org.junit.Test;
 /*
  The MIT License (MIT)
 
@@ -22,20 +26,21 @@
  SOFTWARE.
  */
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
 
+/**
+ * Test Plan:
+ *
+ * Ensure the adaptor handles bad authentications properly.
+ *
+ * 1. Initialize an adaptor with a bogus key and verify the adaptor throws the "unavailable" exception.
+ */
+public class GoogleUrlShortenerAuthenticationTests {
 
-CREATE SCHEMA `shortener_example` ;
+    GoogleURLShortenerAdaptor underTest = new GoogleURLShortenerAdaptor("AIzbogus_Api_keyhere");
 
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
-
+    @Test(expected = UrlShorteningServiceUnavailableException.class)
+    public void withBadAuthentication() {
+        underTest.shortenUrl("http://itdoesntmatter.com/");
+        fail("Should have encountered an ServiceUnavailableException by now...");
+    }
+}

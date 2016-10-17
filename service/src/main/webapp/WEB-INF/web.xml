@@ -17,7 +17,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>com.github.patrickianwilson.template.java.web.ApplicationContextListener</listener-class>
+        <listener-class>com.github.patrickianwilson.blogs.testing.induction.ApplicationContextListener</listener-class>
     </listener>
 
 </web-app>

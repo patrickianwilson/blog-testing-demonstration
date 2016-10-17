@@ -1,3 +1,10 @@
+package com.github.patrickianwilson.blogs.testing.induction.integration;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  The MIT License (MIT)
 
@@ -21,21 +28,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+public class Runner {
+    public static final Logger LOG = LoggerFactory.getLogger(Runner.class);
+    public static final int DEFAULT_PORT = 8080;
+    private final String warFile;
+    private final Server jetty;
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
+    public Runner(String webDir) {
+        this.warFile = webDir;
+        jetty = new Server(DEFAULT_PORT);
+    }
 
+    public void start() throws Exception {
 
-CREATE SCHEMA `shortener_example` ;
+        WebAppContext webapp = new WebAppContext();
+        webapp.setContextPath("/");
+        webapp.setWar(warFile);
 
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
+        jetty.setHandler(webapp);
+        jetty.start();
 
+        LOG.info("Jetty Status is {}", jetty.getState());
+    }
+
+    public void stop() throws Exception {
+        jetty.stop();
+    }
+
+    /**
+     * Join the main thread to the jetty worker pool and block until the pool shuts down.
+     * @throws Exception
+     */
+    public void join() throws Exception {
+
+    }
+}

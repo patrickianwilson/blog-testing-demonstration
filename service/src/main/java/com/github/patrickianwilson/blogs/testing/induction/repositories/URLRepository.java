@@ -1,3 +1,7 @@
+package com.github.patrickianwilson.blogs.testing.induction.repositories;
+
+import com.github.patrickianwilson.blogs.testing.induction.repositories.entities.UrlServiceEntity;
+
 /*
  The MIT License (MIT)
 
@@ -21,21 +25,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+public interface URLRepository {
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
+    /**
+     * lookup an url Entity based on the longform of the URL (ie = the unshortened url).
+     * @param longForm
+     * @return the url entity (if found) or null otherwise.
+     */
+    UrlServiceEntity findByLongForm(String longForm);
 
+    /**
+     * Cache a valid URL entity into the database.
+     * @param entity a pre validated entity to cache in the database.  Long form should already be check for length and format.  Smae goes for shortForm.
+     */
+    void persist(UrlServiceEntity entity);
 
-CREATE SCHEMA `shortener_example` ;
-
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
-
+}

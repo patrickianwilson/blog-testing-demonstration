@@ -1,3 +1,11 @@
+package com.github.patrickianwilson.blogs.testing.induction;
+
+import org.jboss.resteasy.plugins.server.servlet.FilterDispatcher;
+import com.github.patrickianwilson.blogs.testing.induction.controllers.ErrorCodeExceptionMapper;
+import com.github.patrickianwilson.blogs.testing.induction.controllers.StatusController;
+import com.github.patrickianwilson.blogs.testing.induction.controllers.TestingController;
+import com.google.inject.servlet.ServletModule;
+
 /*
  The MIT License (MIT)
 
@@ -21,21 +29,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+public class WebModule extends ServletModule {
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
+    @Override
+    protected void configureServlets() {
+        super.configureServlets();
 
+        //message handlers
+        bind(JsonMessageBodyHandler.class);
 
-CREATE SCHEMA `shortener_example` ;
+        //exception mappers
+        bind(ErrorCodeExceptionMapper.class);
+        bind(GenericServerErrorExceptionMapper.class);
 
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
+        //controllers.
+        bind(StatusController.class);
+        bind(TestingController.class);
 
+        //boot up the resteasy dispatcher.
+        bind(FilterDispatcher.class).asEagerSingleton();
+        filter("/*").through(FilterDispatcher.class);
+
+    }
+}

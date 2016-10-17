@@ -1,3 +1,5 @@
+package com.github.patrickianwilson.blogs.testing.induction.shortener;
+
 /*
  The MIT License (MIT)
 
@@ -21,21 +23,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+public class UrlShorteningServiceUnavailableException extends RuntimeException {
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
+    public UrlShorteningServiceUnavailableException() {
+    }
 
+    public UrlShorteningServiceUnavailableException(String message) {
+        super(message);
+    }
 
-CREATE SCHEMA `shortener_example` ;
+    public UrlShorteningServiceUnavailableException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
-
+    public UrlShorteningServiceUnavailableException(Throwable cause) {
+        super(cause);
+    }
+}

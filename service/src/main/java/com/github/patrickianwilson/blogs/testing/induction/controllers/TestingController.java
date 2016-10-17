@@ -1,3 +1,13 @@
+package com.github.patrickianwilson.blogs.testing.induction.controllers;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+import com.github.patrickianwilson.blogs.testing.induction.controllers.exceptions.BadJSONInputException;
+import com.google.gson.JsonSyntaxException;
+
 /*
  The MIT License (MIT)
 
@@ -21,21 +31,23 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+@Path("/testing")
+public class TestingController {
 
-#Run this script as a DB admin user (usually root)
-#then create a new "localhost" login user:
-# username = demouser
-#password = demo
-#and assign it the SELECT, DELETE and INSERT grants on the 'shortener_example' schema.
+    @GET
+    public Response testAssumptions(@QueryParam("url") String param, @QueryParam("error") String errorCond) {
+        if (errorCond != null) {
+            switch (errorCond) {
+                case "badReq":
+                    throw new BadJSONInputException(new JsonSyntaxException("fake bad json"));
+                default:
+                    throw new RuntimeException("Sneaky runtuime exception...  IE - one that wasn't expected.");
+            }
+        }
 
-
-CREATE SCHEMA `shortener_example` ;
-
-CREATE TABLE `shortener_example`.`URL_Cache` (
-  `longForm` VARCHAR(255) NOT NULL,
-  `shortForm` VARCHAR(45) NOT NULL,
-  `url_id` INT NOT NULL,
-  PRIMARY KEY (`url_id`, `longForm`),
-  UNIQUE INDEX `longForm_UNIQUE` (`longForm` ASC),
-  UNIQUE INDEX `shortForm_UNIQUE` (`shortForm` ASC));
-
+        return Response.ok()
+                .header(HttpHeaders.LOCATION, "http://g.og/shortened")
+                .header("X-Testing-Orignal-URL", param)
+                .build();
+    }
+}
